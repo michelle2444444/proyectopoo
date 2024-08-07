@@ -1,7 +1,7 @@
 import org.bson.Document;
 import java.time.Instant;
 
-public class Cajero extends Main {
+public class Cajero {
     private String usuarioCajero;
     private String contraseniaCajero;
     private String cedulaCajero;
@@ -101,8 +101,15 @@ public class Cajero extends Main {
         this.ingresoCajero = ingresoCajero;
     }
 
-    @Override
-    public Document toDocument(){
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public Document toDocument() {
         return new Document("Usuario", usuarioCajero)
                 .append("Contrasenia", contraseniaCajero)
                 .append("Cedula", cedulaCajero)
@@ -114,4 +121,19 @@ public class Cajero extends Main {
                 .append("Ingreso", ingresoCajero)
                 .append("Timestamp", timestamp);
     }
+
+    public static Cajero fromDocument(Document doc) {
+        return new Cajero(
+                doc.getString("Usuario"),
+                doc.getString("Contrasenia"),
+                doc.getString("Cedula"),
+                doc.getString("Nombre"),
+                doc.getString("Apellido"),
+                doc.getString("Edad"),
+                doc.getString("Correo"),
+                doc.getString("Rol"),
+                doc.getString("Ingreso")
+        );
+    }
 }
+

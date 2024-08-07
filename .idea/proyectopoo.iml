@@ -6,5 +6,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="mongodb.driver.sync" level="project" />
+    <orderEntry type="library" exported="" name="slf4j.api" level="project" />
   </component>
 </module>
