@@ -19,7 +19,7 @@ public class AgregarProductos extends JFrame {
     private JTable table1;
     private JButton regresarButton;
     private JTextField CodProd;
-    private JTextField CantidadProd;
+    private JTextField DescripcionProd;
     private JTextField stockprod;
     private JTextField precioprod;
     private JTextField NomProd;
@@ -44,13 +44,13 @@ public class AgregarProductos extends JFrame {
         // Crear los componentes
         JLabel labelNomProd = new JLabel("Producto:");
         JLabel labelCodProd = new JLabel("Código:");
-        JLabel labelCantidadProd = new JLabel("Descripción:");
+        JLabel labelDescripcionProd = new JLabel("Descripción:");
         JLabel labelStockProd = new JLabel("Stock:");
         JLabel labelPrecioProd = new JLabel("Precio:");
 
         NomProd = new JTextField();
         CodProd = new JTextField();
-        CantidadProd = new JTextField();
+        DescripcionProd = new JTextField();
         stockprod = new JTextField();
         precioprod = new JTextField();
 
@@ -80,11 +80,11 @@ public class AgregarProductos extends JFrame {
                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                 .addComponent(labelNomProd)
                                 .addComponent(labelCodProd)
-                                .addComponent(labelCantidadProd))
+                                .addComponent(labelDescripcionProd))
                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                 .addComponent(NomProd, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
                                 .addComponent(CodProd, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
-                                .addComponent(CantidadProd, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE))
+                                .addComponent(DescripcionProd, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                 .addComponent(labelStockProd)
                                 .addComponent(labelPrecioProd))
@@ -109,8 +109,8 @@ public class AgregarProductos extends JFrame {
                                 .addComponent(labelPrecioProd)
                                 .addComponent(precioprod, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                .addComponent(labelCantidadProd)
-                                .addComponent(CantidadProd, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(labelDescripcionProd)
+                                .addComponent(DescripcionProd, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
                                 .addComponent(agregarButton)
                                 .addComponent(addStockButton))
         );
@@ -127,31 +127,30 @@ public class AgregarProductos extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String producto = NomProd.getText();
                 String codigo = CodProd.getText();
-                String descripcion = CantidadProd.getText();
-                String stock = stockprod.getText();
+                String descripcion = DescripcionProd.getText();
+                int stock;
                 double precio;
-                int cantidad;
 
                 try {
+                    stock = Integer.parseInt(stockprod.getText());
                     precio = Double.parseDouble(precioprod.getText());
-                    descripcion = Integer.parseInt(CantidadProd.getText());
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null, "Debe ingresarse un número válido", "Error", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
 
-                Productos productoObj = new Productos(producto, codigo, cantidad, stock, precio);
+                Productos productoObj = new Productos(producto, codigo, descripcion, stock, precio);
                 if (!isProductosEmpty(productoObj)) {
                     productosList.add(productoObj);
                     Document prodDoc = productoObj.toDocument();
                     productosCollection.insertOne(prodDoc);
                     JOptionPane.showMessageDialog(null, "Producto Ingresado", "Información", JOptionPane.INFORMATION_MESSAGE);
-                    modelo.addRow(new Object[]{productoObj.getNomProducto(), productoObj.getIdProducto(), productoObj.getCantidadProd(), productoObj.getStockProd(), productoObj.getPrecioProd()});
+                    modelo.addRow(new Object[]{productoObj.getNomProducto(), productoObj.getIdProducto(), productoObj.getDescripcionProd(), productoObj.getStockProd(), productoObj.getPrecioProd()});
 
                     // Limpiar los campos de entrada
                     NomProd.setText("");
                     CodProd.setText("");
-                    CantidadProd.setText("");
+                    DescripcionProd.setText("");
                     stockprod.setText("");
                     precioprod.setText("");
                 } else {
@@ -177,12 +176,13 @@ public class AgregarProductos extends JFrame {
     private boolean isProductosEmpty(Productos productos) {
         return productos.getNomProducto() == null || productos.getNomProducto().isEmpty() ||
                 productos.getIdProducto() == null || productos.getIdProducto().isEmpty() ||
-                productos.getStockProd() == null || productos.getStockProd().isEmpty() ||
-                productos.getPrecioProd() == 0.0 ||
-                productos.getCantidadProd() == 0;
+                productos.getDescripcionProd() == null || productos.getDescripcionProd().isEmpty() ||
+                productos.getStockProd() == 0 ||
+                productos.getPrecioProd() == 0.0;
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new AgregarProductos().setVisible(true));
     }
 }
+
