@@ -13,21 +13,33 @@ public class LoginForm extends JFrame {
         setSize(300, 300);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setContentPane(mainPanel);
-        pack();
+
+
+        mainPanel = new JPanel();
+        button1Ingreso = new JButton("Ingresar Admin");
+        button2Ingreso = new JButton("Ingresar Cajero");
+
+
+        mainPanel.setLayout(new GridLayout(2, 1, 10, 10));
+
 
         button1Ingreso.setPreferredSize(new Dimension(200, 30));
         button2Ingreso.setPreferredSize(new Dimension(200, 30));
 
+
+        mainPanel.add(button1Ingreso);
+        mainPanel.add(button2Ingreso);
+
+        setContentPane(mainPanel);
+
+
         button1Ingreso.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                LogForm2 logForm2 = new LogForm2();
-                logForm2.setVisible(true);
-                logForm2.setSize(600, 600);
-                logForm2.setPreferredSize(new Dimension(450, 400));
-                logForm2.pack();
+                LoginAdminForm logForm2 = new LoginAdminForm();
+                logForm2.setSize(450, 400);
                 logForm2.setLocationRelativeTo(null);
+                logForm2.setVisible(true);
                 dispose();
             }
         });
@@ -35,12 +47,10 @@ public class LoginForm extends JFrame {
         button2Ingreso.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                LoginCajero logForm3 = new LogForm3();
-                logForm3.setVisible(true);
-                logForm3.setSize(600, 600);
-                logForm3.setPreferredSize(new Dimension(550, 400));
-                logForm3.pack();
+                LoginCajeroForm logForm3 = new LoginCajeroForm();
+                logForm3.setSize(550, 400);
                 logForm3.setLocationRelativeTo(null);
+                logForm3.setVisible(true);
                 dispose();
             }
         });
