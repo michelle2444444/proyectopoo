@@ -23,8 +23,8 @@ public class LoginAdminForm extends JFrame {
         setLocationRelativeTo(null);
 
         mainPanel2 = new JPanel();
-        mainPanel2.setLayout(new GridLayout(4, 1, 10, 10)); // Usando GridLayout para organizar los componentes
-
+        mainPanel2.setLayout(new GridLayout(4, 1, 10, 8)); // Usando GridLayout para organizar los componentes
+        mainPanel2.setBackground(new Color(229, 222, 137));
         userAdmin = new JTextField();
         passAdmin = new JPasswordField();
         ingresarButton = new JButton("Ingresar");
@@ -50,7 +50,7 @@ public class LoginAdminForm extends JFrame {
                     MongoCollection<Document> usuarios = database.getCollection("Administrador");
 
                     Document query = new Document("Usuario", user)
-                            .append("Contrasena", pass);
+                            .append("Contrasenia", pass);
                     Document result = usuarios.find(query).first();
 
                     if (result != null) {

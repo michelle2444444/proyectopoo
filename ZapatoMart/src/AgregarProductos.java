@@ -5,6 +5,7 @@ import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -30,49 +31,112 @@ public class AgregarProductos extends JFrame {
     public AgregarProductos() {
         setTitle("Agregar Productos");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setContentPane(AgregarProdPanel);
         setSize(650, 700);
         setLocationRelativeTo(null);
-        setVisible(true);
 
-        AgregarProdPanel.setLayout(null);
+        AgregarProdPanel = new JPanel();
+        AgregarProdPanel.setLayout(new BorderLayout());
 
         MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");
-        MongoDatabase database = mongoClient.getDatabase("Usuarios");
-        MongoCollection<Document> productosCollection = database.getCollection("Productos");
+        MongoDatabase database = mongoClient.getDatabase("ZapatoMart");
+        MongoCollection<Document> productosCollection = database.getCollection("productos");
 
-        // Establecer los límites para los campos de texto
-        NomProd.setBounds(120, 350, 150, 20);
-        CodProd.setBounds(120, 385, 150, 20);
-        CantidadProd.setBounds(120, 420, 150, 20);
-        stockprod.setBounds(390, 350, 150, 20);
-        precioprod.setBounds(390, 385, 150, 20);
+        // Crear los componentes
+        JLabel labelNomProd = new JLabel("Producto:");
+        JLabel labelCodProd = new JLabel("Código:");
+        JLabel labelCantidadProd = new JLabel("Descripción:");
+        JLabel labelStockProd = new JLabel("Stock:");
+        JLabel labelPrecioProd = new JLabel("Precio:");
 
-        agregarButton.setBounds(200, 470, 120, 25);
-        addStockButton.setBounds(330, 470, 120, 25);
-        regresarButton.setBounds(40, 637, 100, 20);
+        NomProd = new JTextField();
+        CodProd = new JTextField();
+        CantidadProd = new JTextField();
+        stockprod = new JTextField();
+        precioprod = new JTextField();
 
-        modelo = new DefaultTableModel(new Object[]{"Producto", "Código", "Cantidad", "Stock", "Precio"}, 0);
-        table1.setModel(modelo);
+        agregarButton = new JButton("Agregar");
+        addStockButton = new JButton("Add Stock");
+        regresarButton = new JButton("Regresar");
 
+        // Crear y aplicar borde al botón
+        Border borde = BorderFactory.createLineBorder(Color.BLACK);
+        regresarButton.setBorder(borde);
+        regresarButton.setPreferredSize(new Dimension(50, 30));
+
+        // Configurar la tabla
+        modelo = new DefaultTableModel(new Object[]{"Producto", "Código", "Descripción", "Stock", "Precio"}, 0);
+        table1 = new JTable(modelo);
         JScrollPane scrollPane = new JScrollPane(table1);
-        scrollPane.setBounds(70, 530, 500, 100);
-        AgregarProdPanel.add(scrollPane);
+
+        // Establecer el diseño del panel
+        JPanel formPanel = new JPanel();
+        GroupLayout layout = new GroupLayout(formPanel);
+        formPanel.setLayout(layout);
+        layout.setAutoCreateGaps(true);
+        layout.setAutoCreateContainerGaps(true);
+
+        layout.setHorizontalGroup(
+                layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                .addComponent(labelNomProd)
+                                .addComponent(labelCodProd)
+                                .addComponent(labelCantidadProd))
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                .addComponent(NomProd, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(CodProd, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(CantidadProd, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                .addComponent(labelStockProd)
+                                .addComponent(labelPrecioProd))
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                .addComponent(stockprod, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(precioprod, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                .addComponent(agregarButton, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(addStockButton, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE))
+        );
+
+        layout.setVerticalGroup(
+                layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(labelNomProd)
+                                .addComponent(NomProd, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(labelStockProd)
+                                .addComponent(stockprod, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(labelCodProd)
+                                .addComponent(CodProd, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(labelPrecioProd)
+                                .addComponent(precioprod, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(labelCantidadProd)
+                                .addComponent(CantidadProd, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(agregarButton)
+                                .addComponent(addStockButton))
+        );
+
+        AgregarProdPanel.add(formPanel, BorderLayout.NORTH);
+        AgregarProdPanel.add(scrollPane, BorderLayout.CENTER);
+        AgregarProdPanel.add(regresarButton, BorderLayout.SOUTH);
+
+        setContentPane(AgregarProdPanel);
+        setVisible(true);
 
         agregarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String producto = NomProd.getText();
                 String codigo = CodProd.getText();
+                String descripcion = CantidadProd.getText();
                 String stock = stockprod.getText();
                 double precio;
                 int cantidad;
 
                 try {
                     precio = Double.parseDouble(precioprod.getText());
-                    cantidad = Integer.parseInt(CantidadProd.getText());
+                    descripcion = Integer.parseInt(CantidadProd.getText());
                 } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(null, "Debe ingresarse un número válido", null, JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Debe ingresarse un número válido", "Error", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
 
@@ -81,7 +145,7 @@ public class AgregarProductos extends JFrame {
                     productosList.add(productoObj);
                     Document prodDoc = productoObj.toDocument();
                     productosCollection.insertOne(prodDoc);
-                    JOptionPane.showMessageDialog(null, "Producto Ingresado", null, JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Producto Ingresado", "Información", JOptionPane.INFORMATION_MESSAGE);
                     modelo.addRow(new Object[]{productoObj.getNomProducto(), productoObj.getIdProducto(), productoObj.getCantidadProd(), productoObj.getStockProd(), productoObj.getPrecioProd()});
 
                     // Limpiar los campos de entrada
@@ -91,7 +155,7 @@ public class AgregarProductos extends JFrame {
                     stockprod.setText("");
                     precioprod.setText("");
                 } else {
-                    JOptionPane.showMessageDialog(null, "El formulario está vacío", null, JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "El formulario está vacío", "Advertencia", JOptionPane.WARNING_MESSAGE);
                 }
             }
         });
@@ -108,7 +172,6 @@ public class AgregarProductos extends JFrame {
                 dispose();
             }
         });
-
     }
 
     private boolean isProductosEmpty(Productos productos) {
