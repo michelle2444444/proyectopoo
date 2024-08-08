@@ -1,7 +1,12 @@
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 
 public class Trasaccion extends JFrame {
     private JPanel Mpanel;
@@ -21,6 +26,7 @@ public class Trasaccion extends JFrame {
     private JTextField totaldetalle;
     private JTextField proddetalle;
     private JTextField preciodeta;
+    private JLabel icon1;
 
     public Trasaccion() {
         setTitle("Transaccion");
@@ -177,8 +183,67 @@ public class Trasaccion extends JFrame {
         generarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                generarPDF();
             }
         });
+    }
+
+    private void generarPDF() {
+        String dest = "NotaVenta.pdf";
+        try {
+            PdfWriter writer = new PdfWriter(dest);
+            com.itextpdf.kernel.pdf.PdfDocument pdf = new com.itextpdf.kernel.pdf.PdfDocument(writer);
+            Document document = new Document(pdf);
+
+            // Datos del vendedor
+            document.add(new Paragraph("Datos del vendedor"));
+            Table table = new Table(2);
+            table.addCell("Nombre:");
+            table.addCell(nombrecajero.getText());
+            table.addCell("C.I:");
+            table.addCell(cicajero.getText());
+            table.addCell("Correo:");
+            table.addCell(correocajero.getText());
+            table.addCell("Dirección:");
+            table.addCell(direcajero.getText());
+            table.addCell("Tlf:");
+            table.addCell(tlfcajero.getText());
+            document.add(table);
+
+            // Datos del cliente
+            document.add(new Paragraph("Datos del cliente"));
+            table = new Table(2);
+            table.addCell("Nombre:");
+            table.addCell(nombrecliente.getText());
+            table.addCell("C.I:");
+            table.addCell(ciclie.getText());
+            table.addCell("Correo:");
+            table.addCell(correocli.getText());
+            table.addCell("Dirección:");
+            table.addCell(direcliente.getText());
+            table.addCell("Tlf:");
+            table.addCell(tlfcli.getText());
+            document.add(table);
+
+            // Detalle de Factura
+            document.add(new Paragraph("Detalle de Factura"));
+            table = new Table(2);
+            table.addCell("Producto:");
+            table.addCell(proddetalle.getText());
+            table.addCell("Cantidad comprada:");
+            table.addCell(cantidaddetalle.getText());
+            table.addCell("Precio:");
+            table.addCell(preciodeta.getText());
+            table.addCell("Total a pagar + IVA:");
+            table.addCell(totaldetalle.getText());
+            document.add(table);
+
+            document.close();
+            JOptionPane.showMessageDialog(this, "Nota de venta generada con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al generar la nota de venta.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public static void main(String[] args) {
