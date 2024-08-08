@@ -27,23 +27,59 @@ public class Stock extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
 
-        stockPanel.setLayout(null);
-        modificarButton.setBounds(90, 130, 100, 25);
-        buscarButton.setBounds(210, 130, 100, 25);
-        regresarButton.setBounds(30, 321, 90, 20);
+        initComponents();
+    }
 
-        cod.setBounds(120, 31, 150, 20);
-        textField3.setBounds(120, 83, 150, 20);
-        nombre.setBounds(120, 57, 150, 20);
-
-        stock.setBounds(65, 29, 150, 20);
-
+    private void initComponents() {
+        stockPanel = new JPanel();
+        cod = new JTextField();
+        nombre = new JTextField();
+        textField3 = new JTextField();
+        buscarButton = new JButton("Buscar");
+        modificarButton = new JButton("Modificar");
+        regresarButton = new JButton("Regresar");
+        table1 = new JTable();
+        stock = new JLabel("Stock:");
         modelo1 = new DefaultTableModel(new Object[]{"Producto", "Codigo", "Cantidad", "Stock", "Precio"}, 0);
-        table1.setModel(modelo1);
 
+        table1.setModel(modelo1);
         JScrollPane scrollPane = new JScrollPane(table1);
-        scrollPane.setBounds(30, 170, 330, 150);
-        stockPanel.add(scrollPane);
+
+        GroupLayout layout = new GroupLayout(stockPanel);
+        stockPanel.setLayout(layout);
+        layout.setAutoCreateGaps(true);
+        layout.setAutoCreateContainerGaps(true);
+
+        layout.setHorizontalGroup(
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                        .addComponent(stock)
+                                        .addComponent(cod, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(nombre, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(textField3, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(buscarButton)
+                                                .addComponent(modificarButton))
+                                        .addComponent(regresarButton))
+                                .addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 330, GroupLayout.PREFERRED_SIZE))
+        );
+
+        layout.setVerticalGroup(
+                layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(stock)
+                                .addComponent(cod, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(nombre, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(textField3, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(buscarButton)
+                                .addComponent(modificarButton))
+                        .addComponent(regresarButton)
+                        .addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+        );
 
         buscarButton.addActionListener(new ActionListener() {
             @Override
@@ -51,12 +87,14 @@ public class Stock extends JFrame {
                 buscarProducto();
             }
         });
+
         modificarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 actualizarStock();
             }
         });
+
         regresarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

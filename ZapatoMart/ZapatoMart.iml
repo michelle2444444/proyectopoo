@@ -10,6 +10,7 @@
     <orderEntry type="library" exported="" name="mongodb.driver.sync" level="project" />
     <orderEntry type="library" exported="" name="slf4j.api" level="project" />
     <orderEntry type="library" exported="" name="slf4j.simple" level="project" />
-    <orderEntry type="library" name="itextpdf.forms" level="project" />
+    <orderEntry type="library" exported="" name="itextpdf.forms" level="project" />
+    <orderEntry type="library" exported="" name="mongodb.bson" level="project" />
   </component>
 </module>

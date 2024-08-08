@@ -16,14 +16,6 @@
           <text value="Administrar Stock"/>
         </properties>
       </component>
-      <component id="41a5b" class="javax.swing.JButton" binding="Button2reportes">
-        <constraints>
-          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Reportes de venta"/>
-        </properties>
-      </component>
       <component id="1c7ae" class="javax.swing.JButton" binding="Button3anadir">
         <constraints>
           <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
