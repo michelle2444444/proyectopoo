@@ -21,76 +21,146 @@ public class Trasaccion extends JFrame {
     private JTextField totaldetalle;
     private JTextField proddetalle;
     private JTextField preciodeta;
-    private JLabel icon1;
 
     public Trasaccion() {
         setTitle("Transaccion");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setContentPane(Mpanel);
         setSize(820, 700);
         setLocationRelativeTo(null);
         setVisible(true);
 
-        Mpanel.setLayout(null);
+        Mpanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(5, 5, 5, 5);
 
         // Inicializar componentes
-        nombrecajero = new JTextField();
-        cicajero = new JTextField();
-        correocajero = new JTextField();
-        direcajero = new JTextField();
-        tlfcajero = new JTextField();
-        nombrecliente = new JTextField();
-        direcliente = new JTextField();
-        tlfcli = new JTextField();
-        ciclie = new JTextField();
-        correocli = new JTextField();
+        JLabel labelNombreCajero = new JLabel("Nombre:");
+        nombrecajero = new JTextField(20);
+        JLabel labelCicajero = new JLabel("C.I:");
+        cicajero = new JTextField(20);
+        JLabel labelCorreocajero = new JLabel("Correo:");
+        correocajero = new JTextField(20);
+        JLabel labelDirecajero = new JLabel("Dirección:");
+        direcajero = new JTextField(20);
+        JLabel labelTlfcajero = new JLabel("Tlf:");
+        tlfcajero = new JTextField(20);
+
+        JLabel labelNombreCliente = new JLabel("Nombre:");
+        nombrecliente = new JTextField(20);
+        JLabel labelCiclie = new JLabel("C.I:");
+        ciclie = new JTextField(20);
+        JLabel labelCorreocli = new JLabel("Correo:");
+        correocli = new JTextField(20);
+        JLabel labelDirecliente = new JLabel("Dirección:");
+        direcliente = new JTextField(20);
+        JLabel labelTlfcli = new JLabel("Tlf:");
+        tlfcli = new JTextField(20);
+
+        JLabel labelProddetalle = new JLabel("Producto:");
+        proddetalle = new JTextField(20);
+        JLabel labelCantidaddetalle = new JLabel("Cantidad comprada:");
+        cantidaddetalle = new JTextField(20);
+        JLabel labelPreciodeta = new JLabel("Precio:");
+        preciodeta = new JTextField(20);
+        JLabel labelTotaldetalle = new JLabel("Total a pagar + IVA:");
+        totaldetalle = new JTextField(20);
+
         regresarButton = new JButton("Regresar");
         generarButton = new JButton("Generar");
-        cantidaddetalle = new JTextField();
-        totaldetalle = new JTextField();
-        proddetalle = new JTextField();
-        preciodeta = new JTextField();
-        icon1 = new JLabel();
 
-        // Añadir componentes al panel
-        Mpanel.add(nombrecajero);
-        Mpanel.add(cicajero);
-        Mpanel.add(correocajero);
-        Mpanel.add(direcajero);
-        Mpanel.add(tlfcajero);
-        Mpanel.add(nombrecliente);
-        Mpanel.add(direcliente);
-        Mpanel.add(tlfcli);
-        Mpanel.add(ciclie);
-        Mpanel.add(correocli);
-        Mpanel.add(regresarButton);
-        Mpanel.add(generarButton);
-        Mpanel.add(cantidaddetalle);
-        Mpanel.add(totaldetalle);
-        Mpanel.add(proddetalle);
-        Mpanel.add(preciodeta);
-        Mpanel.add(icon1);
+        // Datos del vendedor
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        Mpanel.add(new JLabel("Datos del vendedor"), gbc);
 
-        // Configuración de los componentes
-        nombrecajero.setBounds(93, 50, 150, 20);
-        correocajero.setBounds(318, 50, 150, 20);
-        direcajero.setBounds(93, 100, 150, 20);
-        tlfcajero.setBounds(93, 150, 150, 20);
-        cicajero.setBounds(318, 100, 150, 20);
+        gbc.gridy = 1;
+        Mpanel.add(labelNombreCajero, gbc);
+        gbc.gridx = 1;
+        Mpanel.add(nombrecajero, gbc);
+        gbc.gridx = 2;
+        Mpanel.add(labelDirecajero, gbc);
+        gbc.gridx = 3;
+        Mpanel.add(direcajero, gbc);
 
-        nombrecliente.setBounds(93, 290, 150, 20);
-        direcliente.setBounds(93, 335, 150, 20);
-        tlfcli.setBounds(93, 380, 150, 20);
-        correocli.setBounds(318, 290, 150, 20);
-        ciclie.setBounds(318, 335, 150, 20);
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        Mpanel.add(labelCicajero, gbc);
+        gbc.gridx = 1;
+        Mpanel.add(cicajero, gbc);
+        gbc.gridx = 2;
+        Mpanel.add(labelTlfcajero, gbc);
+        gbc.gridx = 3;
+        Mpanel.add(tlfcajero, gbc);
 
-        proddetalle.setBounds(93, 505, 150, 20);
-        cantidaddetalle.setBounds(325, 505, 150, 20);
-        preciodeta.setBounds(570, 505, 150, 20);
-        totaldetalle.setBounds(93, 595, 150, 20);
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        Mpanel.add(labelCorreocajero, gbc);
+        gbc.gridx = 1;
+        Mpanel.add(correocajero, gbc);
 
-        generarButton.setBounds(350, 630, 100, 25);
-        regresarButton.setBounds(93, 630, 100, 25);
+        // Datos del cliente
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        Mpanel.add(new JLabel("Datos del cliente"), gbc);
+
+        gbc.gridy = 5;
+        Mpanel.add(labelNombreCliente, gbc);
+        gbc.gridx = 1;
+        Mpanel.add(nombrecliente, gbc);
+        gbc.gridx = 2;
+        Mpanel.add(labelDirecliente, gbc);
+        gbc.gridx = 3;
+        Mpanel.add(direcliente, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 6;
+        Mpanel.add(labelCiclie, gbc);
+        gbc.gridx = 1;
+        Mpanel.add(ciclie, gbc);
+        gbc.gridx = 2;
+        Mpanel.add(labelTlfcli, gbc);
+        gbc.gridx = 3;
+        Mpanel.add(tlfcli, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 7;
+        Mpanel.add(labelCorreocli, gbc);
+        gbc.gridx = 1;
+        Mpanel.add(correocli, gbc);
+
+        // Detalle de Factura
+        gbc.gridx = 0;
+        gbc.gridy = 8;
+        Mpanel.add(new JLabel("Detalle de Factura"), gbc);
+
+        gbc.gridy = 9;
+        Mpanel.add(labelProddetalle, gbc);
+        gbc.gridx = 1;
+        Mpanel.add(proddetalle, gbc);
+        gbc.gridx = 2;
+        Mpanel.add(labelCantidaddetalle, gbc);
+        gbc.gridx = 3;
+        Mpanel.add(cantidaddetalle, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 10;
+        Mpanel.add(labelPreciodeta, gbc);
+        gbc.gridx = 1;
+        Mpanel.add(preciodeta, gbc);
+        gbc.gridx = 2;
+        Mpanel.add(labelTotaldetalle, gbc);
+        gbc.gridx = 3;
+        Mpanel.add(totaldetalle, gbc);
+
+        // Botones
+        gbc.gridx = 0;
+        gbc.gridy = 11;
+        Mpanel.add(regresarButton, gbc);
+        gbc.gridx = 3;
+        Mpanel.add(generarButton, gbc);
+
+        setContentPane(Mpanel);
 
         regresarButton.addActionListener(new ActionListener() {
             @Override
@@ -107,7 +177,6 @@ public class Trasaccion extends JFrame {
         generarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Lógica para generar transacción
             }
         });
     }

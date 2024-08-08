@@ -7,25 +7,20 @@ import java.awt.event.ActionListener;
 public class FormCajero extends JFrame {
     private JPanel Cajerform;
     private JButton regresarButton;
-    private JButton productosButton;
     private JButton transaccionButton;
 
     public FormCajero() {
         setTitle("Cajeros");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setContentPane(Cajerform);
-        setSize(600, 440);
-        setLocationRelativeTo(null);
-        setVisible(true);
 
         // Inicializar componentes
+        Cajerform = new JPanel();
         regresarButton = new JButton("Regresar");
-        productosButton = new JButton("Productos");
         transaccionButton = new JButton("Transacción");
 
-        // Añadir componentes al panel
+        // Configurar el panel
+        Cajerform.setLayout(new FlowLayout());
         Cajerform.add(regresarButton);
-        Cajerform.add(productosButton);
         Cajerform.add(transaccionButton);
 
         // Configuración de los bordes y tamaño de los botones
@@ -33,20 +28,22 @@ public class FormCajero extends JFrame {
         regresarButton.setBorder(borde1);
         regresarButton.setPreferredSize(new Dimension(150, 20));
 
-        Border borde2 = BorderFactory.createLineBorder(Color.BLACK, 1, true);
-        productosButton.setBorder(borde2);
-        productosButton.setPreferredSize(new Dimension(150, 20));
-
         Border borde3 = BorderFactory.createLineBorder(Color.BLACK, 1, true);
         transaccionButton.setBorder(borde3);
         transaccionButton.setPreferredSize(new Dimension(150, 20));
+
+        // Añadir el panel al contenido del JFrame
+        setContentPane(Cajerform);
+        setSize(600, 440);
+        setLocationRelativeTo(null);
+        setVisible(true);
 
         transaccionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Trasaccion transaccion = new Trasaccion();
                 transaccion.setVisible(true);
-                transaccion.setPreferredSize(new Dimension(500, 300));
+                transaccion.setSize(new Dimension(820, 700));
                 transaccion.setLocationRelativeTo(null);
                 transaccion.setResizable(false);
                 dispose();

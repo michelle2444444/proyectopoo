@@ -12,7 +12,7 @@ public class CajeroForm extends JFrame {
     private JLabel usercajero;
     private JLabel contraseniacajero;
     private JTextField textFieldusser;
-    private JTextField textField2contrasenia;
+    private JPasswordField textField2contrasenia;
     private JButton ingresarButton;
 
     public CajeroForm() {
@@ -23,7 +23,8 @@ public class CajeroForm extends JFrame {
 
         panel = new JPanel();
         panel.setBackground(new Color(137, 172, 118));
-        bienvenida = new JLabel("Bienvenido Cajero");
+        panel.setLayout(new GridLayout(4, 2, 10, 10));
+        bienvenida = new JLabel("Bienvenido Cajero", SwingConstants.CENTER);
         usercajero = new JLabel("Usuario Cajero:");
         textFieldusser = new JTextField(20);
         contraseniacajero = new JLabel("Contraseña Cajero:");
@@ -31,17 +32,23 @@ public class CajeroForm extends JFrame {
         ingresarButton = new JButton("Ingresar");
 
         panel.add(bienvenida);
+        panel.add(new JLabel(""));
         panel.add(usercajero);
         panel.add(textFieldusser);
         panel.add(contraseniacajero);
         panel.add(textField2contrasenia);
+        panel.add(new JLabel(""));
         panel.add(ingresarButton);
 
         ingresarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String usuario = textFieldusser.getText();
-                String contrasena = new String(((JPasswordField) textField2contrasenia).getPassword());
+                String contrasena = new String(textField2contrasenia.getPassword());
+
+                System.out.println("Usuario ingresado: " + usuario);
+                System.out.println("Contraseña ingresada: " + contrasena);
+                System.out.println("Contraseña hash ingresada: " + HashClave.hashPassword(contrasena));
 
                 if (verificarCredenciales(usuario, contrasena)) {
                     FormCajero formCajero = new FormCajero();
@@ -64,9 +71,12 @@ public class CajeroForm extends JFrame {
             MongoDatabase database = mongoClient.getDatabase("ZapatoMart");
             MongoCollection<Document> collection = database.getCollection("Cajeros");
 
-            Document cajero = collection.find(eq("usuario", usuario)).first();
+            Document cajero = collection.find(eq("Usuario", usuario)).first();
             if (cajero != null) {
-                String hashedPassword = cajero.getString("contrasenia");
+                String hashedPassword = cajero.getString("Contrasenia");
+
+                System.out.println("Contraseña hash almacenada: " + hashedPassword);
+
                 return HashClave.verifyHash(contrasena, hashedPassword);
             }
         } catch (Exception e) {
@@ -84,3 +94,5 @@ public class CajeroForm extends JFrame {
         });
     }
 }
+
+
