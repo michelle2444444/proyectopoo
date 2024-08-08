@@ -9,7 +9,6 @@ public class FormAdmin extends JFrame {
     private JPanel AdminPanel;
     private JButton Button1adminstock;
     private JButton Button3anadir;
-    private JButton Button2reportes;
     private JButton cerrarSesionButton;
 
     public FormAdmin() {
@@ -22,7 +21,6 @@ public class FormAdmin extends JFrame {
         AdminPanel.setLayout(new GridLayout(4, 1, 10, 10));
 
         Button1adminstock = new JButton("Administrar Stock");
-        Button2reportes = new JButton("Reportes");
         Button3anadir = new JButton("Añadir Usuarios");
         cerrarSesionButton = new JButton("Cerrar Sesión");
 
@@ -31,9 +29,6 @@ public class FormAdmin extends JFrame {
         Button1adminstock.setBorder(borde);
         Button1adminstock.setPreferredSize(new Dimension(150, 30));
 
-        Button2reportes.setBorder(borde);
-        Button2reportes.setPreferredSize(new Dimension(150, 30));
-
         Button3anadir.setBorder(borde);
         Button3anadir.setPreferredSize(new Dimension(150, 30));
 
@@ -41,7 +36,6 @@ public class FormAdmin extends JFrame {
         cerrarSesionButton.setPreferredSize(new Dimension(150, 30));
 
         AdminPanel.add(Button1adminstock);
-        AdminPanel.add(Button2reportes);
         AdminPanel.add(Button3anadir);
         AdminPanel.add(cerrarSesionButton);
 
