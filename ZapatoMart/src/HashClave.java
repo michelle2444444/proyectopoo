@@ -1,17 +1,19 @@
-import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
 public class HashClave {
-
-    public static String hashPassword(String password) {
+    public static String hashPassword(String input) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
-            byte[] hashedPassword = md.digest(password.getBytes(StandardCharsets.UTF_8));
-            return Base64.getEncoder().encodeToString(hashedPassword);
+            byte[] hash = md.digest(input.getBytes());
+            return Base64.getEncoder().encodeToString(hash);
         } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("Error al crear el hash de la contraseña: Algoritmo no encontrado", e);
+            throw new RuntimeException(e);
         }
+    }
+
+    public static boolean verifyHash(String input, String hashed) {
+        return hashPassword(input).equals(hashed);
     }
 }

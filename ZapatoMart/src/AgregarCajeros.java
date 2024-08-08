@@ -33,14 +33,14 @@ public class AgregarCajeros extends JFrame {
         setVisible(true);
 
         MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");
-        MongoDatabase database = mongoClient.getDatabase("Usuarios");
+        MongoDatabase database = mongoClient.getDatabase("ZapatoMart");
         MongoCollection<Document> cajerosCollection = database.getCollection("Cajeros");
 
         ButtonIngreso.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String usuario = nomingreso.getText() + apelingreso.getText() + "Xpress";
-                String contrasenia = CIingreso.getText() + "AutoParts";
+                String usuario = nomingreso.getText() + apelingreso.getText() + "Zapato";
+                String contrasenia = CIingreso.getText() + "Mart";
                 String contraseniaH = HashClave.hashPassword(contrasenia);
                 String cedula = CIingreso.getText();
                 String nombre = nomingreso.getText();
@@ -65,7 +65,7 @@ public class AgregarCajeros extends JFrame {
                     cajerosCollection.insertOne(cajeroDoc);
                     JOptionPane.showMessageDialog(null, "Cajero Ingresado", null, JOptionPane.INFORMATION_MESSAGE);
 
-                    // Clear input fields
+                    // Limpiar los campos input
                     CIingreso.setText("");
                     nomingreso.setText("");
                     apelingreso.setText("");

@@ -23,10 +23,10 @@ public class LoginForm extends JFrame {
         text1.setPreferredSize(new Dimension(200, 30));
 
         buttonIngresarAdmin = new JButton("Ingresar Admin");
-        buttonIngresarAdmin.setPreferredSize(new Dimension(200, 30));
+        buttonIngresarAdmin.setPreferredSize(new Dimension(200, 20));
 
         buttonIngresarCajero = new JButton("Ingresar Cajero");
-        buttonIngresarCajero.setPreferredSize(new Dimension(200, 30));
+        buttonIngresarCajero.setPreferredSize(new Dimension(200, 20));
 
         mainPanel.add(text1);
         mainPanel.add(buttonIngresarAdmin);
